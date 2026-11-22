@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>STREET STYLE</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B0B0B;--surf:#171717;--line:#2a2a2a;--tx:#fff;--mut:#929292;--ac:#FF6B1A;--on-ac:#0B0B0B;--tone1:#1f1f1f;--tone2:#262626;--tone3:#171717;
+color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#F4F4F2;--surf:#fff;--line:#dcdcd8;--tx:#0B0B0B;--mut:#5f5f5f;--tone1:#e9e9e5;--tone2:#dfdfda;--tone3:#f0f0ed;color-scheme:light}}
+:root[data-theme="dark"]{color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:400 15px/1.5 Inter,system-ui,sans-serif;padding-bottom:84px;overflow-x:hidden}
+h1,h2,h3{font-family:Unbounded,Inter,system-ui,sans-serif;margin:0;line-height:1.05}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+.top{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;max-width:720px;margin:0 auto}
+.logo{font:900 17px Unbounded,sans-serif;letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
+.logo i{width:14px;height:14px;background:var(--ac);display:block;transform:rotate(45deg)}
+.ic{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hero{padding:28px 0 8px}
+.hero h1{font-size:clamp(38px,12vw,72px);font-weight:900;letter-spacing:-.04em;text-transform:uppercase}
+.hero h1 span{display:inline-block;background:var(--ac);color:var(--on-ac);padding:0 .12em;margin-top:.06em}
+.hero p{color:var(--mut);max-width:34ch;margin:18px 0 22px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:50px;padding:0 24px;border-radius:12px;background:var(--ac);color:var(--on-ac);font-weight:600;transition:transform .15s}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:var(--surf);color:var(--tx);border:1px solid var(--line)}
+.btn.block{width:100%}
+h2{font-size:20px;font-weight:600;margin:34px 0 14px;letter-spacing:-.02em}
+.row{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.row::-webkit-scrollbar{display:none}
+.chip{flex:none;height:38px;padding:0 16px;border-radius:19px;background:var(--surf);border:1px solid var(--line);color:var(--mut);font-weight:500}
+.chip.on{background:var(--ac);border-color:var(--ac);color:var(--on-ac)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 12px}
+@media(min-width:640px){.grid{grid-template-columns:repeat(3,1fr)}}
+.card{cursor:pointer}
+.art{position:relative;aspect-ratio:4/5;border-radius:14px;background:var(--tone1);display:grid;place-items:center;overflow:hidden}
+.art svg.g{width:68%;height:68%}
+.fav{position:absolute;right:8px;top:8px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:var(--tx);background:var(--bg)}
+.fav.on{color:var(--ac)}.fav.on .ic{fill:var(--ac)}
+.tag{position:absolute;left:8px;top:8px;background:var(--ac);color:var(--on-ac);font:600 11px Inter;padding:4px 8px;border-radius:6px}
+.card h3{font:500 14px Inter;margin:10px 0 2px}
+.pr{margin:0;font-weight:600}
+.srch{display:flex;gap:8px;margin:6px 0 12px}
+.srch input,.srch select,.fld input{height:46px;border-radius:12px;border:1px solid var(--line);background:var(--surf);padding:0 14px;width:100%}
+.srch select{width:auto;flex:none}
+.facts{display:grid;gap:1px;background:var(--line);border-radius:14px;overflow:hidden}
+.facts div{background:var(--surf);padding:16px}
+.facts b{display:block;font-weight:600;margin-bottom:2px}
+.facts span,.mut{color:var(--mut)}
+.gal{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:8px;scrollbar-width:none}
+.gal::-webkit-scrollbar{display:none}
+.gal .art{flex:none;width:100%;scroll-snap-align:center}
+.sizes{display:flex;gap:8px;flex-wrap:wrap}
+.sz{min-width:56px;height:48px;border-radius:12px;border:1px solid var(--line);background:var(--surf);font-weight:600;transition:transform .15s,background .15s}
+.sz.on{background:var(--ac);border-color:var(--ac);color:var(--on-ac);transform:scale(1.06)}
+.sz:disabled{color:var(--mut);opacity:.5;text-decoration:line-through;cursor:not-allowed}
+.back{height:44px;display:inline-flex;align-items:center;gap:6px;color:var(--mut)}
+.cta{position:fixed;left:0;right:0;bottom:0;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));background:var(--bg);border-top:1px solid var(--line);z-index:5}
+.nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--bg);border-top:1px solid var(--line);padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));z-index:4}
+.nav button{flex:1;display:grid;justify-items:center;gap:2px;padding:6px 0;color:var(--mut);font-size:11px}
+.nav button.on{color:var(--ac)}
+.sheet{position:fixed;inset:0;z-index:10;background:rgba(0,0,0,.6);display:flex;align-items:flex-end;justify-content:center}
+.sheet>form{background:var(--surf);width:100%;max-width:560px;max-height:92%;overflow:auto;border-radius:20px 20px 0 0;padding:20px 16px calc(20px + env(safe-area-inset-bottom,0px));animation:up .25s ease-out}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+.fld{display:block;margin-bottom:12px}
+.fld span{display:block;color:var(--mut);font-size:13px;margin-bottom:4px}
+.sum{background:var(--bg);border-radius:12px;padding:12px 14px;margin:0 0 14px}
+.err{color:#ff6b6b;margin:0 0 10px}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:11px 18px;border-radius:12px;font-weight:500;z-index:20;max-width:90%;animation:up .2s}
+.empty{padding:40px 0;text-align:center;color:var(--mut)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="top"><div class="logo"><i></i>STREET STYLE</div><button id="topfav" class="back" aria-label="Избранное"></button></div>
+<main id="app" class="wrap"></main>
+<nav class="nav" id="nav"></nav>
+<script>
+var CATS=[['all','Все товары'],['jeans','Джинсы'],['shoes','Обувь'],['tees','Футболки'],['hoodies','Худи'],['pants','Штаны'],['jackets','Куртки'],['acc','Аксессуары']];
+var P=[
+{id:1,sku:'SS-JN-001',name:'Джинсы Baggy Black',cat:'jeans',price:24900,color:'Чёрный',hex:'#2b2b2b',sizes:{S:2,M:5,L:0,XL:3},nw:1,pop:1,d:'Свободный крой, плотный деним 12 унций, заниженная посадка.'},
+{id:2,sku:'SS-HD-014',name:'Худи Oversize Graphite',cat:'hoodies',price:21900,color:'Графит',hex:'#4a4a4a',sizes:{S:0,M:4,L:6,XL:2},nw:0,pop:1,d:'Футер с начёсом, объёмный капюшон, прямой низ.'},
+{id:3,sku:'SS-TE-007',name:'Футболка Heavy Tee',cat:'tees',price:9900,color:'Белый',hex:'#e8e8e8',sizes:{S:5,M:8,L:7,XL:0},nw:1,pop:0,d:'Хлопок 240 г/м², удлинённый силуэт, плотный ворот.'},
+{id:4,sku:'SS-SH-021',name:'Кроссовки Rail Low',cat:'shoes',price:38900,color:'Серый',hex:'#8a8a8a',sizes:{40:1,41:3,42:4,43:0,44:2},nw:1,pop:1,d:'Рельефная подошва, дышащая сетка, усиленный носок.'},
+{id:5,sku:'SS-PN-009',name:'Штаны Cargo Wide',cat:'pants',price:19900,color:'Хаки',hex:'#6b6b4a',sizes:{S:3,M:0,L:4,XL:4},nw:0,pop:0,d:'Широкие карго с боковыми карманами и утяжкой по низу.'},
+{id:6,sku:'SS-JK-003',name:'Куртка Coach Jacket',cat:'jackets',price:32900,color:'Чёрный',hex:'#1c1c1c',sizes:{S:2,M:2,L:3,XL:1},nw:1,pop:1,d:'Лёгкая куртка на кнопках, ветрозащитная ткань.'},
+{id:7,sku:'SS-AC-002',name:'Кепка Five Panel',cat:'acc',price:6900,color:'Оранжевый',hex:'#FF6B1A',sizes:{ONE:12},nw:0,pop:0,d:'Пятипанельная кепка, регулируемый ремешок.'},
+{id:8,sku:'SS-HD-016',name:'Худи Zip Black',cat:'hoodies',price:23900,color:'Чёрный',hex:'#202020',sizes:{S:1,M:3,L:0,XL:0},nw:0,pop:0,d:'Молния на всю длину, плотный футер, манжеты с резинкой.'}];
+var SH={tees:'M30 18L42 14Q50 24 58 14L70 18L90 36L80 48L70 42V86H30V42L20 48L10 36Z',hoodies:'M28 22L40 14Q50 30 60 14L72 22L92 62L82 68L72 48V88H28V48L18 68L8 62Z',jackets:'M28 20L42 14L50 20L58 14L72 20L92 60L82 66L72 46V88H28V46L18 66L8 60Z',jeans:'M30 12H70L76 90H55L50 42L45 90H24Z',pants:'M28 12H72L80 90H56L50 40L44 90H20Z',shoes:'M8 66V50Q28 48 38 34L52 42Q62 54 92 56Q96 60 92 70H10Z',acc:'M20 62Q22 30 50 28Q78 30 80 62ZM70 60H96V67H70Z'};
+var DEF_CODE='';
+var st={v:'home',cat:'all',q:'',sort:'pop',fav:[],pid:null,size:null,wa:''};
+try{st.fav=JSON.parse(localStorage.getItem('ss_fav')||'[]');st.wa=localStorage.getItem('ss_wa')||''}catch(e){}
+var $=function(s){return document.querySelector(s)};
+var fmt=function(n){return n.toLocaleString('ru-RU')+' ₸'};
+var I={home:'<path d="M4 11l8-7 8 7v9H4z"/>',cat:'<rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/>',heart:'<path d="M12 20s-7-4.6-7-10a4 4 0 017-2.6A4 4 0 0119 10c0 5.400-7 10-7 10z"/>',set:'<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.600 5.600l2.100 2.100M16.300 16.300l2.100 2.100M5.600 18.400l2.100-2.100M16.300 7.700l2.100-2.100"/>',back:'<path d="M15 5l-7 7 7 7"/>',wa:'<path d="M4 20l1.300-4.200A8 8 0 118 19z"/>'};
+var ic=function(k){return '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">'+I[k]+'</svg>'};
+function art(p,i){var t=['var(--tone1)','var(--tone2)','var(--tone3)'][i||0],tr=['','scale(1.35) translate(-13 -10)','scale(-1 1) translate(-100 0)'][i||0];
+var im=p.imgs&&p.imgs[i||0];return '<div class="art" style="background:'+t+'">'+(im?'<img src="'+im+'" alt="">':'')+'<svg class="g" style="'+(im?'display:none':'')+'" viewBox="0 0 100 100" aria-hidden="true"><g transform="'+tr+'"><path d="'+SH[p.cat]+'" fill="'+p.hex+'" stroke="rgba(255,255,255,.18)" stroke-width="1"/></g></svg>'+(i==null?'<button class="fav'+(st.fav.indexOf(p.id)>-1?' on':'')+'" data-fav="'+p.id+'" aria-label="В избранное">'+ic('heart')+'</button>'+(p.nw?'<span class="tag">Новинка</span>':''):'')+'</div>'}
+function card(p){return '<article class="card" data-id="'+p.id+'">'+art(p)+'<h3>'+p.name+'</h3><p class="pr">'+fmt(p.price)+'</p></article>'}
+function toast(m){var e=document.createElement('div');e.className='toast';e.setAttribute('role','status');e.textContent=m;document.body.appendChild(e);setTimeout(function(){e.remove()},2400)}
+function go(v,x){st.v=v;if(x!==undefined)st.pid=x;st.size=null;render();window.scrollTo(0,0)}
+function list(){var r=P.filter(function(p){return(st.cat=='all'||p.cat==st.cat)&&p.name.toLowerCase().indexOf(st.q.toLowerCase())>-1});
+if(st.sort=='asc')r.sort(function(a,b){return a.price-b.price});else if(st.sort=='desc')r.sort(function(a,b){return b.price-a.price});else r.sort(function(a,b){return b.pop-a.pop});return r}
+function render(){var h='',v=st.v;
+$('#nav').innerHTML=[['home','Главная','home'],['catalog','Каталог','cat'],['favs','Избранное','heart'],['settings','Настройки','set']].map(function(n){return '<button data-go="'+n[0]+'" class="'+(v==n[0]||(v=='product'&&n[0]=='catalog')?'on':'')+'">'+ic(n[2])+n[1]+'</button>'}).join('');
+$('#topfav').innerHTML=ic('heart')+(st.fav.length?st.fav.length:'');
+if(v=='home'){h='<section class="hero"><h1>Уличный<br><span>стиль</span><br>для всех</h1><p>Одежда и обувь с доставкой по всему Казахстану. Выбирайте размер, мы подтвердим наличие в WhatsApp.</p><button class="btn" data-go="catalog">Смотреть каталог</button></section>'
++'<h2>Категории</h2><div class="row">'+CATS.slice(1).map(function(c){return '<button class="chip" data-cat="'+c[0]+'">'+c[1]+'</button>'}).join('')+'</div>'
++'<h2>Популярное</h2><div class="grid">'+P.filter(function(p){return p.pop}).slice(0,4).map(card).join('')+'</div>'
++'<h2>Новинки</h2><div class="grid">'+P.filter(function(p){return p.nw}).slice(0,4).map(card).join('')+'</div>'
++'<h2>Доставка и оплата</h2><div class="facts"><div><b>Доставка по Казахстану</b><span>Отправляем в любой город. Условия и сроки уточняем при подтверждении заказа.</span></div><div><b>Проверка наличия</b><span>Размеры и остатки видны в карточке товара.</span></div><div><b>Заказ через WhatsApp</b><span>Заказ считается принятым только после ответа магазина.</span></div></div>'
++'<h2>Контакты</h2><p class="mut">'+(st.wa?'WhatsApp: +'+st.wa:'Номер WhatsApp не настроен. Добавьте его в настройках.')+'</p>'}
+else if(v=='catalog'){h='<h2>Каталог</h2><div class="srch"><input id="q" type="search" placeholder="Поиск по названию" value="'+st.q+'" aria-label="Поиск"><select id="sort" aria-label="Сортировка"><option value="pop">Популярные</option><option value="asc">Дешевле</option><option value="desc">Дороже</option></select></div><div class="row" style="margin-bottom:16px">'+CATS.map(function(c){return '<button class="chip'+(st.cat==c[0]?' on':'')+'" data-cat="'+c[0]+'">'+c[1]+'</button>'}).join('')+'</div>'+gridOf(list())}
+else if(v=='favs'){h='<h2>Избранное</h2>'+gridOf(P.filter(function(p){return st.fav.indexOf(p.id)>-1}),'Нажмите на сердечко у товара, чтобы сохранить его здесь.')}
+else if(v=='settings'){h='<h2>Настройки</h2><button class="btn ghost block" data-go="admin" style="margin-bottom:16px">Панель администратора</button><label class="fld"><span>Номер WhatsApp магазина (с кодом страны, без плюса)</span><input id="wa" inputmode="numeric" placeholder="Например, код страны и номер" value="'+st.wa+'"></label><button class="btn block" id="savewa">Сохранить номер</button><p class="mut">В этом прототипе номер хранится только в вашем браузере. В боевой версии он лежит в базе, а доступ к настройкам закрыт кодом администратора, который проверяет сервер.</p>'}
+else if(v=='product'){var p=P.filter(function(x){return x.id==st.pid})[0];h='<button class="back" data-go="catalog">'+ic('back')+'Назад</button><div class="gal">'+(p.imgs&&p.imgs.length?p.imgs:[0,1,2]).map(function(q,i){return art(p,i)}).join('')+'</div><h2 style="margin-top:18px">'+p.name+'</h2><p class="pr" style="font-size:20px">'+fmt(p.price)+'</p><p class="mut">Артикул '+p.sku+'. Цвет: '+p.color+'.</p><p>'+p.d+'</p><h2 style="font-size:16px">Размер</h2><div class="sizes">'+Object.keys(p.sizes).map(function(s){var n=p.sizes[s];return '<button class="sz'+(st.size==s?' on':'')+'" data-size="'+s+'"'+(n?'':' disabled aria-label="Размер '+s+' недоступен"')+'>'+s+'</button>'}).join('')+'</div><p class="mut">'+(st.size?(p.sizes[st.size]<=2?'Осталось '+p.sizes[st.size]+' шт.':'В наличии'):'Выберите размер, чтобы оформить заказ. Зачёркнутых размеров сейчас нет.')+'</p><div style="height:70px"></div><div class="cta"><button class="btn block" id="order">Заказать</button></div>'}
+$('#app').innerHTML=h;document.querySelector('.nav').style.display=v=='product'?'none':'flex'}
+function gridOf(a,msg){return a.length?'<div class="grid">'+a.map(card).join('')+'</div>':'<p class="empty">'+(msg||'Ничего не найдено. Измените запрос или категорию.')+'</p>'}
+function sheet(){var p=P.filter(function(x){return x.id==st.pid})[0],d=document.createElement('div');d.className='sheet';
+d.innerHTML='<form novalidate><h2 style="margin-top:0">Оформление заказа</h2><p class="sum"><b>'+p.name+'</b><br><span class="mut">Артикул '+p.sku+', размер '+st.size+'</span><br><b>'+fmt(p.price)+'</b></p><label class="fld"><span>Имя</span><input name="n" autocomplete="name"></label><label class="fld"><span>Город</span><input name="c" autocomplete="address-level2"></label><label class="fld"><span>Адрес доставки</span><input name="a" autocomplete="street-address"></label><label class="fld"><span>Почтовый индекс</span><input name="z" inputmode="numeric" autocomplete="postal-code"></label><label class="fld"><span>Телефон</span><input name="t" type="tel" autocomplete="tel"></label><p class="err" id="err" role="alert" hidden></p><button class="btn block" type="submit">'+ic('wa')+'Перейти в WhatsApp</button><button class="btn ghost block" type="button" id="cl" style="margin-top:8px">Отмена</button></form>';
+document.body.appendChild(d);d.querySelector('input').focus();
+d.querySelector('#cl').onclick=function(){d.remove()};d.onclick=function(e){if(e.target==d)d.remove()};
+d.querySelector('form').onsubmit=function(e){e.preventDefault();var f=e.target,v=function(k){return f.elements[k].value.trim()},er=$('#err');
+function bad(m){er.textContent=m;er.hidden=false}
+if(!v('n')||!v('c')||!v('a')||!v('z')||!v('t'))return bad('Заполните все поля: имя, город, адрес, индекс и телефон.');
+if(v('t').replace(/\D/g,'').length<10)return bad('Телефон указан неполностью. Введите номер вместе с кодом.');
+var num=st.wa.replace(/\D/g,'');if(!num)return bad('Номер WhatsApp магазина не настроен. Добавьте его в настройках.');
+var m='Здравствуйте! Хочу оформить заказ в STREET STYLE.\n\nТовар: '+p.name+'\nАртикул: '+p.sku+'\nРазмер: '+st.size+'\nЦена: '+p.price+' ₸\n\nИмя: '+v('n')+'\nГород: '+v('c')+'\nАдрес доставки: '+v('a')+'\nПочтовый индекс: '+v('z')+'\nТелефон: '+v('t')+'\n\nПожалуйста, подтвердите наличие и условия доставки.';
+var url='https://wa.me/'+num+'?text='+encodeURIComponent(m);d.remove();toast('Открываем WhatsApp. Заказ подтвердит магазин.');window.open(url,'_blank','noopener')}}
+document.addEventListener('click',function(e){var t=e.target.closest('[data-fav],[data-go],[data-cat],[data-size],[data-id],#order,#savewa,#topfav');if(!t)return;
+if(t.dataset.fav){e.stopPropagation();var id=+t.dataset.fav,i=st.fav.indexOf(id);i>-1?st.fav.splice(i,1):st.fav.push(id);try{localStorage.setItem('ss_fav',JSON.stringify(st.fav))}catch(x){}render();toast(i>-1?'Убрано из избранного':'Добавлено в избранное')}
+else if(t.id=='topfav')go('favs');
+else if(t.dataset.go)go(t.dataset.go);
+else if(t.dataset.cat){st.cat=t.dataset.cat;go('catalog')}
+else if(t.dataset.size){st.size=t.dataset.size;render()}
+else if(t.dataset.id)go('product',+t.dataset.id);
+else if(t.id=='order'){st.size?sheet():toast('Выберите размер перед заказом')}
+else if(t.id=='savewa'){st.wa=$('#wa').value.replace(/\D/g,'');try{localStorage.setItem('ss_wa',st.wa)}catch(x){}toast(st.wa?'Номер сохранён':'Номер удалён')}});
+document.addEventListener('input',function(e){if(e.target.id=='q'){st.q=e.target.value;var pos=e.target.selectionStart;render();var q=$('#q');q.focus();q.setSelectionRange(pos,pos)}});
+document.addEventListener('change',function(e){if(e.target.id=='sort'){st.sort=e.target.value;render();$('#sort').value=st.sort}});
+(function(){
+var css='.art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.ar{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}.ar b{display:block}.stk{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.stp{display:flex;align-items:center;gap:6px;background:var(--bg);border-radius:10px;padding:4px 6px}.stp button{width:30px;height:30px;border-radius:8px;background:var(--surf);border:1px solid var(--line);font-weight:600}.btns{display:flex;gap:8px;flex-wrap:wrap}.sm{height:40px;padding:0 14px;font-size:14px}.kpi{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.kpi div{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:14px}.kpi b{font:600 24px Unbounded,sans-serif;display:block}.fld textarea,.fld select{width:100%;border-radius:12px;border:1px solid var(--line);background:var(--surf);padding:12px 14px;min-height:46px}.chk{display:flex;gap:8px;align-items:center;margin:0 0 10px}.ph{display:flex;gap:6px;align-items:center;margin:6px 0}.ph img{width:48px;height:60px;object-fit:cover;border-radius:8px}.bars{display:flex;align-items:flex-end;gap:3px;height:90px}.bars i{flex:1;background:var(--ac);min-height:2px;border-radius:2px 2px 0 0}';
+var sty=document.createElement('style');sty.textContent=css;document.head.appendChild(sty);
+var AH='88d4bb1231aff6a4eecd9523c020be185fff38ff249bd59ee98454f85c3f3566',ALL=P.slice(),cfg={name:'STREET STYLE',maint:0,deliv:'',cont:''},adm=false,tab='dash',per='7',fails=0,lock=0,del=0,wk=null,vid='x',EV=[];
+try{var a0=JSON.parse(localStorage.getItem('ss_p'));if(a0&&a0.length)ALL=a0;cfg=Object.assign(cfg,JSON.parse(localStorage.getItem('ss_cfg'))||{});EV=JSON.parse(localStorage.getItem('ss_ev')||'[]');vid=localStorage.getItem('ss_vid')||'';if(!vid){vid=Math.random().toString(36).slice(2);localStorage.setItem('ss_vid',vid)}adm=sessionStorage.getItem('ss_adm')=='1'}catch(e){}
+function sync(){P=ALL.filter(function(p){return !p.hid})}
+function save(){try{localStorage.setItem('ss_p',JSON.stringify(ALL));localStorage.setItem('ss_cfg',JSON.stringify(cfg))}catch(e){toast('Не удалось сохранить. Уменьшите размер фото.')}sync()}
+function ev(k,id){EV.push({t:Date.now(),k:k,id:id||0,v:vid});if(EV.length>4000)EV=EV.slice(-4000);try{localStorage.setItem('ss_ev',JSON.stringify(EV))}catch(e){}}
+function clean(s){return String(s).replace(/[<>"&]/g,'').trim()}
+function byId(i){return ALL.filter(function(x){return x.id==i})[0]}
+function sha(s){return crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)).then(function(b){return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,'0')}).join('')})}
+function doLogin(v){var er=$('#lerr');function bad(m){er.textContent=m;er.hidden=false}
+if(Date.now()<lock)return bad('Слишком много попыток. Подождите '+Math.ceil((lock-Date.now())/1000)+' с.');
+if(!window.crypto||!crypto.subtle)return bad('Браузер не поддерживает проверку пароля.');
+sha(v).then(function(h){if(h==AH){adm=true;fails=0;try{sessionStorage.setItem('ss_adm','1')}catch(x){}render()}else{fails++;if(fails>=5){lock=Date.now()+6e4;fails=0}bad('Неверный пароль.')}})}
+function dash(){var d0=new Date();d0.setHours(0,0,0,0);var day=864e5,from=per=='today'?d0.getTime():per=='all'?0:Date.now()-(+per)*day;
+var e=EV.filter(function(x){return x.t>=from}),n=function(k){return e.filter(function(x){return x.k==k})};
+var vis=n('visit'),uq={};vis.forEach(function(x){uq[x.v]=1});var views=n('view'),wa=n('wa'),cnt={},cc={};
+views.forEach(function(x){cnt[x.id]=(cnt[x.id]||0)+1;var p=byId(x.id);if(p)cc[p.cat]=(cc[p.cat]||0)+1});
+var top=Object.keys(cnt).sort(function(a,b){return cnt[b]-cnt[a]}).slice(0,5),cts=Object.keys(cc).sort(function(a,b){return cc[b]-cc[a]});
+var days=per=='30'||per=='all'?30:7,bars=[],mx=1;
+for(var i=days-1;i>=0;i--){var s=d0.getTime()-i*day,c=EV.filter(function(x){return x.k=='visit'&&x.t>=s&&x.t<s+day}).length;bars.push([s,c]);if(c>mx)mx=c}
+var conv=views.length?(wa.length/views.length*100).toFixed(1)+'%':'0%';
+var li=function(a){return a.length?a.join(''):'<p class="mut">Пока нет данных.</p>'};
+return '<div class="row" style="margin-bottom:14px">'+[['today','Сегодня'],['7','7 дней'],['30','30 дней'],['all','Всё время']].map(function(q){return '<button class="chip'+(per==q[0]?' on':'')+'" data-a="per" data-p="'+q[0]+'">'+q[1]+'</button>'}).join('')+'</div>'
++'<div class="kpi"><div><b>'+vis.length+'</b>Посещений</div><div><b>'+Object.keys(uq).length+'</b>Уникальных</div><div><b>'+views.length+'</b>Просмотров товаров</div><div><b>'+wa.length+'</b>Переходов в WhatsApp</div><div style="grid-column:span 2"><b>'+conv+'</b>Конверсия из просмотра в заказ</div></div>'
++'<h2 style="font-size:16px">Посещения по дням</h2><div class="bars">'+bars.map(function(b){return '<i title="'+new Date(b[0]).toLocaleDateString('ru-RU')+': '+b[1]+'" style="height:'+(b[1]/mx*100)+'%"></i>'}).join('')+'</div>'
++'<h2 style="font-size:16px">Популярные товары</h2>'+li(top.map(function(id){var p=byId(id);return '<p class="pr">'+(p?p.name:'Удалённый товар')+' <span class="mut">'+cnt[id]+'</span></p>'}))
++'<h2 style="font-size:16px">Популярные категории</h2>'+li(cts.map(function(k){return '<p class="pr">'+CATS.filter(function(c){return c[0]==k})[0][1]+' <span class="mut">'+cc[k]+'</span></p>'}))
++'<p class="mut" style="margin-top:16px">Статистика считается по визитам с этого браузера. Общая аналитика по всем покупателям появится вместе с сервером.</p>'}
+function prods(){return '<button class="btn block" data-a="new" style="margin-bottom:14px">Добавить товар</button>'+ALL.map(function(p){return '<div class="ar"><b>'+p.name+(p.hid?' (скрыт)':'')+'</b><span class="mut">'+p.sku+', '+fmt(p.price)+'</span><div class="stk">'+Object.keys(p.sizes).map(function(s){return '<span class="stp"><b>'+s+'</b><button data-a="dec" data-id="'+p.id+'" data-s="'+s+'" aria-label="Меньше">−</button><span>'+p.sizes[s]+'</span><button data-a="inc" data-id="'+p.id+'" data-s="'+s+'" aria-label="Больше">+</button></span>'}).join('')+'</div><div class="btns"><button class="btn ghost sm" data-a="edit" data-id="'+p.id+'">Изменить</button><button class="btn ghost sm" data-a="hide" data-id="'+p.id+'">'+(p.hid?'Показать':'Скрыть')+'</button><button class="btn ghost sm" data-a="del" data-id="'+p.id+'">'+(del==p.id?'Точно удалить?':'Удалить')+'</button></div></div>'}).join('')}
+function sets(){return '<label class="fld"><span>Название магазина</span><input id="s1" value="'+cfg.name+'"></label><label class="fld"><span>Номер WhatsApp (с кодом страны, без плюса)</span><input id="s2" inputmode="numeric" value="'+st.wa+'"></label><label class="fld"><span>Условия доставки</span><textarea id="s3">'+cfg.deliv+'</textarea></label><label class="fld"><span>Контактные данные</span><textarea id="s4">'+cfg.cont+'</textarea></label><label class="chk"><input type="checkbox" id="s5"'+(cfg.maint?' checked':'')+'>Режим обслуживания: магазин закрыт для покупателей</label><button class="btn block" data-a="saveset">Сохранить настройки</button>'}
+function A(){if(!adm)return '<h2>Вход для администратора</h2><label class="fld"><span>Пароль</span><input id="pw" type="password" autocomplete="current-password"></label><p class="err" id="lerr" role="alert" hidden></p><button class="btn block" data-a="login">Войти</button>';
+return '<div style="display:flex;justify-content:space-between;align-items:center"><h2>Админ-панель</h2><button class="btn ghost sm" data-a="out">Выйти</button></div><div class="row" style="margin-bottom:16px">'+[['dash','Аналитика'],['prod','Товары'],['set','Настройки']].map(function(t){return '<button class="chip'+(tab==t[0]?' on':'')+'" data-a="tab" data-t="'+t[0]+'">'+t[1]+'</button>'}).join('')+'</div>'+(tab=='dash'?dash():tab=='prod'?prods():sets())}
+function phb(){return wk.imgs.length?wk.imgs.map(function(s,i){return '<div class="ph"><img src="'+s+'" alt=""><button type="button" class="btn ghost sm" data-a="pup" data-i="'+i+'" aria-label="Выше">↑</button><button type="button" class="btn ghost sm" data-a="pdn" data-i="'+i+'" aria-label="Ниже">↓</button><button type="button" class="btn ghost sm" data-a="prm" data-i="'+i+'">Убрать</button></div>'}).join(''):'<p class="mut">Фото не загружены, показывается силуэт.</p>'}
+function form(p){wk=p?JSON.parse(JSON.stringify(p)):{id:0,sku:'',name:'',cat:'jeans',price:0,color:'',hex:'#4a4a4a',sizes:{S:0,M:0,L:0,XL:0},nw:0,pop:0,d:'',imgs:[]};wk.imgs=wk.imgs||[];
+var d=document.createElement('div');d.className='sheet';d.id='ash';
+d.innerHTML='<form novalidate><h2 style="margin-top:0">'+(p?'Изменить товар':'Новый товар')+'</h2><label class="fld"><span>Название</span><input name="name" value="'+wk.name+'"></label><label class="fld"><span>Артикул</span><input name="sku" value="'+wk.sku+'"></label><label class="fld"><span>Цена, ₸</span><input name="price" inputmode="numeric" value="'+(wk.price||'')+'"></label><label class="fld"><span>Категория</span><select name="cat">'+CATS.slice(1).map(function(c){return '<option value="'+c[0]+'"'+(wk.cat==c[0]?' selected':'')+'>'+c[1]+'</option>'}).join('')+'</select></label><label class="fld"><span>Цвет</span><input name="color" value="'+wk.color+'"></label><label class="fld"><span>Цвет силуэта</span><input name="hex" type="color" value="'+wk.hex+'"></label><label class="fld"><span>Описание</span><textarea name="d">'+wk.d+'</textarea></label><label class="fld"><span>Размеры и остатки (S:2, M:5, L:0)</span><input name="sizes" value="'+Object.keys(wk.sizes).map(function(k){return k+':'+wk.sizes[k]}).join(', ')+'"></label><label class="chk"><input type="checkbox" name="nw"'+(wk.nw?' checked':'')+'>Новинка</label><label class="chk"><input type="checkbox" name="pop"'+(wk.pop?' checked':'')+'>Популярное</label><label class="chk"><input type="checkbox" name="hid"'+(wk.hid?' checked':'')+'>Скрыть с витрины</label><span class="mut">Фотографии (порядок = порядок в галерее)</span><div id="phb">'+phb()+'</div><label class="fld"><input id="ph" type="file" accept="image/jpeg,image/png,image/webp" multiple></label><p class="err" id="aer" role="alert" hidden></p><button class="btn block" type="submit">Сохранить товар</button><button class="btn ghost block" type="button" data-a="fcl" style="margin-top:8px">Отмена</button></form>';
+document.body.appendChild(d);d.querySelector('form').onsubmit=function(e){e.preventDefault();fsave()}}
+function fsave(){var f=$('#ash form').elements,g=function(k){return f[k].value},nm=clean(g('name')),sk=clean(g('sku')),pr=parseInt(g('price'),10),er=$('#aer');
+function bad(m){er.textContent=m;er.hidden=false}
+var sz={},ok=0;g('sizes').split(',').forEach(function(x){var q=x.split(':'),k=clean(q[0]||'');if(!k)return;sz[k]=Math.max(0,parseInt(q[1],10)||0);ok=1});
+if(!nm||!sk)return bad('Укажите название и артикул.');if(!(pr>0))return bad('Цена должна быть больше нуля.');if(!ok)return bad('Укажите размеры в формате S:2, M:5.');
+if(ALL.some(function(x){return x.sku==sk&&x.id!=wk.id}))return bad('Такой артикул уже есть.');
+Object.assign(wk,{name:nm,sku:sk,price:pr,cat:g('cat'),color:clean(g('color')),hex:g('hex'),d:clean(g('d')),sizes:sz,nw:f.nw.checked?1:0,pop:f.pop.checked?1:0,hid:f.hid.checked});
+if(!wk.id){wk.id=Math.max.apply(null,ALL.map(function(x){return x.id}).concat(0))+1;ALL.push(wk)}else ALL=ALL.map(function(x){return x.id==wk.id?wk:x});
+save();$('#ash').remove();wk=null;toast('Товар сохранён');render()}
+document.addEventListener('click',function(e){var t=e.target.closest('[data-a]');if(!t)return;var a=t.dataset.a,id=+t.dataset.id,p=id?byId(id):null,i=+t.dataset.i;
+if(a=='login')doLogin($('#pw').value);
+else if(a=='out'){adm=false;try{sessionStorage.removeItem('ss_adm')}catch(x){}render()}
+else if(a=='tab'){tab=t.dataset.t;render()}
+else if(a=='per'){per=t.dataset.p;render()}
+else if(a=='inc'||a=='dec'){var s=t.dataset.s;p.sizes[s]=Math.max(0,(p.sizes[s]||0)+(a=='inc'?1:-1));save();render()}
+else if(a=='hide'){p.hid=!p.hid;save();render()}
+else if(a=='del'){if(del==id){ALL=ALL.filter(function(x){return x.id!=id});del=0;save();toast('Товар удалён')}else del=id;render()}
+else if(a=='edit')form(p);else if(a=='new')form(null);
+else if(a=='fcl'){$('#ash').remove();wk=null}
+else if(a=='prm'||a=='pup'||a=='pdn'){if(a=='prm')wk.imgs.splice(i,1);else{var j=a=='pup'?i-1:i+1;if(j>=0&&j<wk.imgs.length){var tmp=wk.imgs[i];wk.imgs[i]=wk.imgs[j];wk.imgs[j]=tmp}}$('#phb').innerHTML=phb()}
+else if(a=='saveset'){cfg.name=clean($('#s1').value)||'STREET STYLE';st.wa=$('#s2').value.replace(/\D/g,'');cfg.deliv=clean($('#s3').value);cfg.cont=clean($('#s4').value);cfg.maint=$('#s5').checked?1:0;try{localStorage.setItem('ss_wa',st.wa)}catch(x){}save();toast('Настройки сохранены');render()}});
+document.addEventListener('keydown',function(e){if(e.key=='Enter'&&e.target.id=='pw')doLogin(e.target.value)});
+document.addEventListener('change',function(e){if(e.target.id!='ph'||!wk)return;Array.prototype.slice.call(e.target.files).forEach(function(file){if(!/^image\/(jpeg|png|webp)$/.test(file.type)||file.size>8e6){toast('Подходят JPG, PNG, WebP до 8 МБ');return}var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var k=Math.min(1,800/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);wk.imgs.push(c.toDataURL('image/jpeg',.8));$('#phb').innerHTML=phb()};im.src=r.result};r.readAsDataURL(file)});e.target.value=''});
+var _go=go;go=function(v,x){_go(v,x);if(v=='product')ev('view',x)};
+var _o=window.open;window.open=function(u){if(String(u).indexOf('wa.me')>-1)ev('wa',st.pid);return _o.apply(window,arguments)};
+function brand(){var l=document.querySelector('.logo');l.lastChild.textContent=cfg.name;document.title=cfg.name}
+var _r=render;render=function(){_r();brand();
+if(st.v=='admin'){$('#app').innerHTML=A();return}
+if(cfg.maint&&!adm&&st.v!='settings'){$('#app').innerHTML='<p class="empty">Магазин на обслуживании. Загляните позже.</p>';return}
+if(st.v=='home'){var f=document.querySelector('.facts span');if(f&&cfg.deliv)f.textContent=cfg.deliv;var m=document.querySelectorAll('#app p.mut'),l=m[m.length-1];if(l&&cfg.cont)l.textContent=cfg.cont}};
+sync();ev('visit');
+})();
+try{var tg=window.Telegram&&window.Telegram.WebApp;if(tg){tg.ready();tg.expand()}}catch(e){}
+render();
+</script>
+</body>
+</html>
