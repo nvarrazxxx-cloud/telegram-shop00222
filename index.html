@@ -75,6 +75,8 @@ h2{font-size:20px;font-weight:600;margin:34px 0 14px;letter-spacing:-.02em}
 .err{color:#ff6b6b;margin:0 0 10px}
 .toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:11px 18px;border-radius:12px;font-weight:500;z-index:20;max-width:90%;animation:up .2s}
 .empty{padding:40px 0;text-align:center;color:var(--mut)}
+.wab{position:fixed;right:16px;bottom:calc(80px + env(safe-area-inset-bottom,0px));z-index:6;height:48px;padding:0 18px;border-radius:24px;background:var(--ac);color:var(--on-ac);font-weight:600;display:flex;align-items:center;gap:8px;text-decoration:none;transition:transform .15s}
+.wab:active{transform:scale(.96)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -82,6 +84,7 @@ h2{font-size:20px;font-weight:600;margin:34px 0 14px;letter-spacing:-.02em}
 <div class="top"><div class="logo"><i></i>STREET STYLE</div><button id="topfav" class="back" aria-label="Избранное"></button></div>
 <main id="app" class="wrap"></main>
 <nav class="nav" id="nav"></nav>
+<a id="wab" class="wab" href="#" target="_blank" rel="noopener" aria-label="Написать в WhatsApp"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-4.2A8 8 0 118 19z"/></svg>WhatsApp</a>
 <script>
 var CATS=[['all','Все товары'],['jeans','Джинсы'],['shoes','Обувь'],['tees','Футболки'],['hoodies','Худи'],['pants','Штаны'],['jackets','Куртки'],['acc','Аксессуары']];
 var P=[
@@ -96,7 +99,7 @@ var P=[
 var SH={tees:'M30 18L42 14Q50 24 58 14L70 18L90 36L80 48L70 42V86H30V42L20 48L10 36Z',hoodies:'M28 22L40 14Q50 30 60 14L72 22L92 62L82 68L72 48V88H28V48L18 68L8 62Z',jackets:'M28 20L42 14L50 20L58 14L72 20L92 60L82 66L72 46V88H28V46L18 66L8 60Z',jeans:'M30 12H70L76 90H55L50 42L45 90H24Z',pants:'M28 12H72L80 90H56L50 40L44 90H20Z',shoes:'M8 66V50Q28 48 38 34L52 42Q62 54 92 56Q96 60 92 70H10Z',acc:'M20 62Q22 30 50 28Q78 30 80 62ZM70 60H96V67H70Z'};
 var DEF_CODE='';
 var st={v:'home',cat:'all',q:'',sort:'pop',fav:[],pid:null,size:null,wa:''};
-try{st.fav=JSON.parse(localStorage.getItem('ss_fav')||'[]');st.wa=localStorage.getItem('ss_wa')||''}catch(e){}
+try{st.fav=JSON.parse(localStorage.getItem('ss_fav')||'[]');st.wa=localStorage.getItem('ss_wa')||'77023811212'}catch(e){}
 var $=function(s){return document.querySelector(s)};
 var fmt=function(n){return n.toLocaleString('ru-RU')+' ₸'};
 var I={home:'<path d="M4 11l8-7 8 7v9H4z"/>',cat:'<rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/>',heart:'<path d="M12 20s-7-4.6-7-10a4 4 0 017-2.6A4 4 0 0119 10c0 5.400-7 10-7 10z"/>',set:'<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.600 5.600l2.100 2.100M16.300 16.300l2.100 2.100M5.600 18.400l2.100-2.100M16.300 7.700l2.100-2.100"/>',back:'<path d="M15 5l-7 7 7 7"/>',wa:'<path d="M4 20l1.300-4.200A8 8 0 118 19z"/>'};
@@ -121,7 +124,7 @@ else if(v=='catalog'){h='<h2>Каталог</h2><div class="srch"><input id="q" 
 else if(v=='favs'){h='<h2>Избранное</h2>'+gridOf(P.filter(function(p){return st.fav.indexOf(p.id)>-1}),'Нажмите на сердечко у товара, чтобы сохранить его здесь.')}
 else if(v=='settings'){h='<h2>Настройки</h2><button class="btn ghost block" data-go="admin" style="margin-bottom:16px">Панель администратора</button><label class="fld"><span>Номер WhatsApp магазина (с кодом страны, без плюса)</span><input id="wa" inputmode="numeric" placeholder="Например, код страны и номер" value="'+st.wa+'"></label><button class="btn block" id="savewa">Сохранить номер</button><p class="mut">В этом прототипе номер хранится только в вашем браузере. В боевой версии он лежит в базе, а доступ к настройкам закрыт кодом администратора, который проверяет сервер.</p>'}
 else if(v=='product'){var p=P.filter(function(x){return x.id==st.pid})[0];h='<button class="back" data-go="catalog">'+ic('back')+'Назад</button><div class="gal">'+(p.imgs&&p.imgs.length?p.imgs:[0,1,2]).map(function(q,i){return art(p,i)}).join('')+'</div><h2 style="margin-top:18px">'+p.name+'</h2><p class="pr" style="font-size:20px">'+fmt(p.price)+'</p><p class="mut">Артикул '+p.sku+'. Цвет: '+p.color+'.</p><p>'+p.d+'</p><h2 style="font-size:16px">Размер</h2><div class="sizes">'+Object.keys(p.sizes).map(function(s){var n=p.sizes[s];return '<button class="sz'+(st.size==s?' on':'')+'" data-size="'+s+'"'+(n?'':' disabled aria-label="Размер '+s+' недоступен"')+'>'+s+'</button>'}).join('')+'</div><p class="mut">'+(st.size?(p.sizes[st.size]<=2?'Осталось '+p.sizes[st.size]+' шт.':'В наличии'):'Выберите размер, чтобы оформить заказ. Зачёркнутых размеров сейчас нет.')+'</p><div style="height:70px"></div><div class="cta"><button class="btn block" id="order">Заказать</button></div>'}
-$('#app').innerHTML=h;document.querySelector('.nav').style.display=v=='product'?'none':'flex'}
+$('#app').innerHTML=h;document.querySelector('.nav').style.display=v=='product'?'none':'flex';var w=$('#wab');w.style.display=(v=='product'||v=='admin')?'none':'flex';w.href='https://wa.me/'+st.wa.replace(/\D/g,'')+'?text='+encodeURIComponent('Здравствуйте! Хочу уточнить информацию о товарах STREET STYLE.')}
 function gridOf(a,msg){return a.length?'<div class="grid">'+a.map(card).join('')+'</div>':'<p class="empty">'+(msg||'Ничего не найдено. Измените запрос или категорию.')+'</p>'}
 function sheet(){var p=P.filter(function(x){return x.id==st.pid})[0],d=document.createElement('div');d.className='sheet';
 d.innerHTML='<form novalidate><h2 style="margin-top:0">Оформление заказа</h2><p class="sum"><b>'+p.name+'</b><br><span class="mut">Артикул '+p.sku+', размер '+st.size+'</span><br><b>'+fmt(p.price)+'</b></p><label class="fld"><span>Имя</span><input name="n" autocomplete="name"></label><label class="fld"><span>Город</span><input name="c" autocomplete="address-level2"></label><label class="fld"><span>Адрес доставки</span><input name="a" autocomplete="street-address"></label><label class="fld"><span>Почтовый индекс</span><input name="z" inputmode="numeric" autocomplete="postal-code"></label><label class="fld"><span>Телефон</span><input name="t" type="tel" autocomplete="tel"></label><p class="err" id="err" role="alert" hidden></p><button class="btn block" type="submit">'+ic('wa')+'Перейти в WhatsApp</button><button class="btn ghost block" type="button" id="cl" style="margin-top:8px">Отмена</button></form>';
